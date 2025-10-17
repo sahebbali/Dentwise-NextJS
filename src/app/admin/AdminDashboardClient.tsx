@@ -11,15 +11,19 @@ import { SettingsIcon } from "lucide-react";
 
 function AdminDashboardClient() {
   const { user } = useUser();
+  console.log("Current user from Clerk:", user);
   const { data: doctors = [], isLoading: doctorsLoading } = useGetDoctors();
-  const { data: appointments = [], isLoading: appointmentsLoading } = useGetAppointments();
+  const { data: appointments = [], isLoading: appointmentsLoading } =
+    useGetAppointments();
 
   // calculate stats from real data
   const stats = {
     totalDoctors: doctors.length,
     activeDoctors: doctors.filter((doc) => doc.isActive).length,
     totalAppointments: appointments.length,
-    completedAppointments: appointments.filter((app) => app.status === "COMPLETED").length,
+    completedAppointments: appointments.filter(
+      (app) => app.status === "COMPLETED"
+    ).length,
   };
 
   if (doctorsLoading || appointmentsLoading) return <LoadingUI />;
@@ -34,14 +38,17 @@ function AdminDashboardClient() {
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full border border-primary/20">
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-              <span className="text-sm font-medium text-primary">Admin Dashboard</span>
+              <span className="text-sm font-medium text-primary">
+                Admin Dashboard
+              </span>
             </div>
             <div>
               <h1 className="text-4xl font-bold mb-2">
                 Welcome back, {user?.firstName || "Admin"}!
               </h1>
               <p className="text-muted-foreground">
-                Manage doctors, oversee appointments, and monitor your dental practice performance.
+                Manage doctors, oversee appointments, and monitor your dental
+                practice performance.
               </p>
             </div>
           </div>
